@@ -1,0 +1,72 @@
+<p class="serie">Nota técnica · Índice experimental · Atualização mensal</p>
+<h1>Momentum de choque inflacionário no IPCA</h1>
+<p class="autores">Aplicação a 614 subitens do SNIPC, agosto de 1999 a junho de 2026</p>
+
+<div class="resumo">
+  <h2>Resumo</h2>
+  <p>Distinguir em tempo real choques transitórios de choques persistentes é um dos problemas centrais da política monetária. Reconhecer tarde uma pressão persistente arrisca desancorar expectativas; reagir cedo demais a um choque passageiro impõe custo desnecessário em produto e emprego.</p>
+  <p>Lansing e Shapiro (2026) propõem medir essa distinção por um filtro não paramétrico aplicado a dados desagregados de preços. A intuição é simples: se o processo gerador da inflação de uma categoria não mudou, os desvios em relação a ele não deveriam formar sequências sistemáticas de um mesmo sinal. Quando muitas categorias passam a acumular desvios na mesma direção ao mesmo tempo, algo mudou.</p>
+  <p>O índice abaixo aplica esse filtro ao IPCA. Ele mede <em>difusão direcional</em>: qual fração da cesta, ponderada pelo peso, vem registrando pressão sustentada de alta, e qual vem registrando pressão de baixa. É uma medida de amplitude, não de intensidade, e responde a uma pergunta que os núcleos não respondem — se um movimento do índice é generalizado ou concentrado em poucos itens.</p>
+</div>
+
+<section class="corrente">
+  <p class="rot">Leitura corrente</p>
+  <p class="frase" id="frase">Carregando</p>
+  <div class="barra-topo"><span>Pressão de baixa</span><span id="ref">—</span><span>Pressão de alta</span></div>
+  <div class="barra">
+    <div class="lado esq"><div class="trilho"></div><div class="fill b" id="fb"></div></div>
+    <div class="lado dir"><div class="trilho"></div><div class="fill a" id="fa"></div></div>
+  </div>
+  <div class="leitura">
+    <div class="l"><b id="vsm">—</b><span>S⁻ · da cesta</span></div>
+    <div class="c"><b id="vism">—</b><span>índice · S⁺ menos S⁻</span></div>
+    <div class="r"><b id="vsp">—</b><span>S⁺ · da cesta</span></div>
+  </div>
+</section>
+
+<div class="controles">
+  <div class="grupo"><span>Recorte da cesta</span><div class="seg" id="cRec"></div></div>
+  <div class="grupo"><span>Ordem do AR</span><div class="seg" id="cAr"></div></div>
+  <div class="grupo"><span>Resíduos consecutivos (k)</span><div class="seg" id="cK"></div></div>
+</div>
+
+<figure>
+  <div class="hud" id="hud1"></div>
+  <svg id="g1" viewBox="0 0 900 300" role="img" aria-label="Índice de momentum e IPCA acumulado em doze meses"></svg>
+  <div class="leg"><span><i style="background:var(--alta)"></i>Índice acima de zero</span><span><i style="background:var(--baixa)"></i>Índice abaixo de zero</span><span><i style="background:var(--tinta);height:2px"></i>IPCA em 12 meses (eixo direito)</span></div>
+  <figcaption><b>Figura 1 · Índice e inflação acumulada</b>Valores acima de zero indicam maior fração da cesta sob pressão de alta do que de baixa. A linha tracejada marca a média histórica do índice: por conta da assimetria discutida na nota 4, a leitura informativa é a distância até ela, não até o zero.</figcaption>
+</figure>
+
+<figure>
+  <svg id="g2" viewBox="0 0 900 210" role="img" aria-label="Componentes de alta e de baixa do índice"></svg>
+  <figcaption><b>Figura 2 · Componentes</b>Fração da cesta com k resíduos consecutivos de mesmo sinal, de alta (acima) e de baixa (abaixo). O índice da Figura 1 é a diferença entre as duas áreas. As duas não somam um: a maior parte da cesta não apresenta sequência em um mês típico.</figcaption>
+</figure>
+
+<div class="baixar"><button id="dl">Baixar série completa (CSV)</button></div>
+
+<section class="metodo">
+<h2>Nota metodológica</h2>
+
+<h3>1. Construção</h3>
+<p>Para cada subitem <i>i</i>, estima-se por mínimos quadrados uma regressão autorregressiva em janela móvel de 120 meses, com onze variáveis binárias de mês-calendário:</p>
+<div class="eq">π(i,t) = µ(i) + ρ(i)·π(i,t−1) + Σ γ(i,m)·D(m,t) + ε(i,t)</div>
+<p>Retém-se apenas o resíduo do último mês de cada janela. Um subitem exibe momentum positivo quando os últimos k resíduos são todos positivos, e negativo quando todos negativos. Ponderando pelo peso na cesta, obtêm-se as frações S⁺ e S⁻, e o índice é a diferença entre elas. A especificação de referência usa janela de 120 meses, AR(1) e k igual a 3.</p>
+
+<h3>2. Dados e encadeamento</h3>
+<p>IBGE, Sistema Nacional de Índices de Preços ao Consumidor, tabelas 655, 656, 2938, 1419 e 7060 do SIDRA, no nível de subitem. O painel cobre agosto de 1999 a junho de 2026; o índice começa em julho de 2009 por conta da janela de estimação.</p>
+<p>As quatro estruturas de ponderação da POF são unidas pelo código de sete dígitos do SNIPC, estável entre revisões — ao contrário do identificador do SIDRA, que muda quando o subitem é renomeado. Subitens ausentes em uma estrutura recebem a variação do item que os contém, com peso zero, procedimento adotado pelo Banco Central em estudo sobre a sazonalidade do IPCA. A reconstrução do índice geral a partir dos subitens reproduz a série oficial com erro médio de 0,007 ponto percentual em 323 meses.</p>
+
+<h3>3. Desvio em relação ao paper original</h3>
+<p>Lansing e Shapiro usam dados de PCE já ajustados sazonalmente pelo BEA. O IPCA por subitem não tem equivalente: a série dessazonalizada do IBGE gera fatores apenas para Alimentação e bebidas, cerca de 12% da cesta neste painel. Verificamos empiricamente que substituir o dado bruto pelo dessazonalizado oficial não altera o índice.</p>
+<p>Sem tratamento, a sazonalidade domina o resultado. Na especificação literal do paper aplicada a dado bruto, a média do índice por mês-calendário varia 0,13 entre o mês mais alto e o mais baixo, magnitude comparável ao próprio desvio-padrão da série, e os anos de 2021 e 2022 apareceriam com sinal negativo. As variáveis binárias mensais reduzem essa amplitude a 0,04.</p>
+
+<h3>4. Sobre o nível do índice</h3>
+<p>A variação mensal de subitem no Brasil é assimétrica à direita: muitos meses de variação pequena ou nula e saltos ocasionais. A mediana dos resíduos fica portanto abaixo de zero, e o índice carrega um deslocamento de cerca de −0,07 que é estatístico, não econômico. O sinal informativo está no movimento em torno da média histórica.</p>
+<p>Registre-se também que a persistência de sinal é substancialmente menor do que a documentada para os Estados Unidos. As sequências de três resíduos de mesmo sinal excedem em 9% o que se esperaria de sinais independentes, contra excesso da ordem de 40% nos dados americanos. O índice deve ser lido como medida contemporânea de difusão, e não como preditor.</p>
+
+<h3>Referências</h3>
+<p class="ref">Lansing, K. J. e A. H. Shapiro (2026). <i>Measuring Inflation Shock Momentum.</i> Federal Reserve Bank of San Francisco Working Paper 2026-10.</p>
+<p class="ref">Banco Central do Brasil (2018). <i>Evolução da sazonalidade do IPCA.</i> Relatório de Inflação, Estudo Especial 24/2018.</p>
+<p class="ref">IBGE (2021). <i>Metodologia de geração do IPCA dessazonalizado.</i> Nota metodológica 01/2021.</p>
+</section>
+</div>
