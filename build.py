@@ -56,12 +56,15 @@ def main(cache: bool = False) -> None:
 
     print("\n→ montando payload")
     ip = ism.serie_ipca_12m(painel)
+    se = ism.serie_selic_12m()
     d["data"] = pd.to_datetime(d.data)
     ip.index = pd.to_datetime(ip.index)
+    se.index = pd.to_datetime(se.index)
     datas = sorted(d.data.unique())
     pay = {
         "datas": [pd.Timestamp(x).strftime("%Y-%m") for x in datas],
         "ipca": [None if pd.isna(v) else round(float(v), 3) for v in ip.reindex(datas)],
+        "selic": [None if pd.isna(v) else round(float(v), 3) for v in se.reindex(datas)],
         "series": {},
     }
     for (rec, ar, k), g in d.groupby(["recorte", "ar", "k"]):

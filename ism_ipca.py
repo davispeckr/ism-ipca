@@ -359,6 +359,26 @@ def diagnostico_sazonal(res: pd.DataFrame) -> pd.DataFrame:
     return g
 
 
+def serie_selic_12m(index=None) -> pd.Series:
+    """Selic acumulada em 12 meses (% a.a.), da serie SGS 4390 do BCB.
+    Composicao movel de 12 fatores mensais. Fonte oficial, sem credencial."""
+    import urllib.request as _u
+    url = ("https://api.bcb.gov.br/dados/serie/bcdata.sgs.4390/dados"
+           "?formato=json&dataInicial=01/01/2008")
+    raw = _u.urlopen(url, timeout=90).read().decode()
+    d = json.loads(raw)
+    s = {}
+    for r in d:
+        dd, mm, aa = r["data"].split("/")
+        s[f"{aa}-{mm}"] = float(r["valor"])
+    s = pd.Series(s).sort_index()
+    idx = (1 + s / 100)
+    a12 = (idx.rolling(12).apply(lambda x: x.prod(), raw=True) - 1) * 100
+    a12.index = pd.PeriodIndex(a12.index, freq="M").to_timestamp()
+    a12 = a12.rename("selic_12m")
+    return a12.reindex(index) if index is not None else a12
+
+
 def serie_ipca_12m(df: pd.DataFrame) -> pd.Series:
     """IPCA acumulado em 12 meses reconstruido do painel, para o grafico."""
     pub = df[df.origem == "publicado"]

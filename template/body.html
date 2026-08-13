@@ -8,6 +8,7 @@
   <div class="grupo"><a href="#par-serie">Série exibida</a><div class="seg" id="cView"></div></div>
   <div class="grupo"><a href="#par-formato">Formato</a><div class="seg" id="cFmt"></div></div>
   <div class="grupo"><a href="#par-recorte">Recorte</a><div class="seg" id="cRec"></div></div>
+  <div class="grupo"><a href="#par-bench">Comparar com</a><div class="seg" id="cBench"></div></div>
   <div class="grupo"><a href="#par-ar">Modelo AR</a><div class="seg" id="cAr"></div></div>
   <div class="grupo"><a href="#par-k">k</a><div class="seg" id="cK"></div></div>
   <div class="grupo"><label class="toggle" style="padding-top:0"><input type="checkbox" id="tMM"> <a href="#par-mm">média móvel 6m</a></label></div>
@@ -70,6 +71,7 @@
     <p id="par-serie"><b>Série exibida.</b> Alterna entre o índice líquido, o índice acompanhado dos componentes e os componentes isolados. S⁺ e S⁻ não somam um, pois a maior parte da cesta não apresenta sequência em um mês típico.</p>
     <p id="par-formato"><b>Formato.</b> Linha ou barras mensais. As barras evidenciam o sinal de cada mês; a linha evidencia a trajetória.</p>
     <p id="par-recorte"><b>Recorte.</b> Subconjunto da cesta usado na agregação, com pesos reescalonados para somar um dentro do recorte. Serviços e bens seguem os grupos do IPCA e devem ser lidos como aproximações.</p>
+    <p id="par-bench"><b>Comparar com.</b> Linha de referência sobreposta ao índice, no eixo direito: o IPCA ou a Selic acumulados em doze meses, ou nenhuma. Serve para situar o índice frente à inflação corrente e à política monetária; não entra no cálculo.</p>
     <p id="par-ar"><b>Modelo AR.</b> Ordem <i>P</i> da regressão de referência. Ordens maiores absorvem mais dinâmica de curto prazo e tendem a reduzir o número de sequências identificadas. Os resultados são pouco sensíveis a essa escolha.</p>
     <p id="par-k"><b>k.</b> Número de surpresas consecutivas de mesmo sinal exigido para classificar um subitem. Valores menores ampliam a fração classificada e admitem mais ruído; valores maiores tornam o sinal mais estrito.</p>
     <p id="par-mm"><b>Média móvel 6m.</b> Suavização recomendada para leitura. O índice mensal é volátil e pode trocar de sinal por um ou dois meses sem significado econômico.</p>

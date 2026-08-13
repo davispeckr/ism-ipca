@@ -2,8 +2,9 @@ const RECORTES=[["cheio","IPCA cheio"],["sem_alimentacao","Ex-alimentos"],["serv
 const ARS=[[1,"AR(1)"],[3,"AR(3)"],[12,"AR(12)"]];
 const KS=[[2,"2"],[3,"3"],[4,"4"]];
 const VIEWS=[["indice","Índice"],["comp","Índice + componentes"],["soComp","Componentes"]];
+const BENCHES=[["ipca","IPCA 12m"],["selic","Selic 12m"],["nada","Nenhum"]];
 const FMTS=[["linha","Linha"],["barras","Barras"]];
-let sel={rec:"cheio",ar:1,k:3,view:"indice",fmt:"linha"}, MM=false;
+let sel={rec:"cheio",ar:1,k:3,view:"indice",fmt:"linha"}, MM=false, BENCH="ipca";
 let W=1100,H1=400,P={l:52,r:60,t:16,b:28};
 const $=id=>document.getElementById(id);
 const S=()=>D.series[`${sel.rec}|${sel.ar}|${sel.k}`];
@@ -82,15 +83,18 @@ const ultimoValido=a=>{let i=R.b;while(i>R.a&&a[i]==null)i--;return i};
 
 let dom1={lo:-.4,hi:.3,ilo:0,ihi:13};
 function desenhar(){
-  const w=W,h=H1,ism=sIsm(),sp=sSp(),sm=sSm(),ip=D.ipca,v=sel.view;
-  const comIpca=v==="indice";
+  const w=W,h=H1,ism=sIsm(),sp=sSp(),sm=sSm(),v=sel.view;
+  const bench=(v==="indice"&&BENCH!=="nada")?(BENCH==="selic"?D.selic:D.ipca):null;
+  const benchLbl=BENCH==="selic"?"Selic 12m":"IPCA 12m";
+  const benchCor="var(--ink)";
+  const comIpca=bench!=null;
   // dominio do eixo esquerdo por visao
   let lo,hi;
   if(v==="indice"){[lo,hi]=dominio([ism],.15);lo=Math.min(lo,-.02);hi=Math.max(hi,.02)}
   else if(v==="comp"){[lo,hi]=dominio([ism,sp,sm],.12);lo=Math.min(lo,-.02)}
   else{const[,m]=dominio([sp,sm],.12);hi=m;lo=-m}
   let ilo=0,ihi=13;
-  if(comIpca){[ilo,ihi]=dominio([ip],.1);ilo=Math.min(0,ilo);ihi=Math.max(ihi,4)}
+  if(comIpca){[ilo,ihi]=dominio([bench],.1);ilo=Math.min(0,ilo);ihi=Math.max(ihi,4)}
   dom1={lo,hi,ilo,ihi};
   let g=eixoX(w,h);
   ticks(lo,hi,5).forEach(t=>{const y=escY(t,lo,hi,h);
@@ -143,21 +147,22 @@ function desenhar(){
     g+=endLabel(esc(l1,w)-24,escY(smNeg[l1],lo,hi,h)+16,"S⁻","var(--baixa)");
   }
   if(comIpca){
-    g+=`<path d="${linha(ip,ilo,ihi,w,h)}" fill="none" stroke="var(--ink)" stroke-width="2"/>`;
-    const pi=ultimoValido(ip);
-    g+=endLabel(esc(pi,w)-62,escY(ip[pi],ilo,ihi,h)-11,"IPCA 12m","var(--ink)");
+    g+=`<path d="${linha(bench,ilo,ihi,w,h)}" fill="none" stroke="${benchCor}" stroke-width="2"/>`;
+    const pi=ultimoValido(bench);
+    g+=endLabel(esc(pi,w)-62,escY(bench[pi],ilo,ihi,h)-11,benchLbl,benchCor);
   }
   g+=`<line class="crosshair" id="ch1" x1="0" y1="${P.t}" x2="0" y2="${h-P.b}"/>`;
   g+=`<circle id="d1a" r="3.4" opacity="0"/><circle id="d1b" r="3.4" fill="var(--ink)" opacity="0"/>`;
   g+=`<rect id="hit" x="${P.l}" y="0" width="${w-P.l-P.r}" height="${h}" fill="transparent" style="cursor:crosshair"/>`;
   $("g1").setAttribute("viewBox",`0 0 ${w} ${h}`); $("g1").innerHTML=g;
-  $("figtit").textContent=v==="indice"?"Índice e IPCA em 12 meses":
-    v==="comp"?"Índice e componentes S⁺ e S⁻":"Componentes S⁺ e S⁻";
+  $("figtit").textContent=v!=="indice"?(v==="comp"?"Índice e componentes S⁺ e S⁻":"Componentes S⁺ e S⁻"):
+    (BENCH==="nada"?"Índice de momentum":BENCH==="selic"?"Índice e Selic em 12 meses":"Índice e IPCA em 12 meses");
 }
 
 function hero(i){
   const s=S();
-  $("ref").textContent=rot(D.datas[i])+" · IPCA "+D.ipca[i].toFixed(2).replace(".",",")+"% em 12m";
+  const bd=BENCH==="selic"?D.selic:D.ipca, bl=BENCH==="selic"?"Selic":"IPCA";
+  $("ref").textContent=rot(D.datas[i])+(BENCH==="nada"?"":" · "+bl+" "+(bd[i]??0).toFixed(2).replace(".",",")+"% em 12m");
   $("fa").style.width=Math.min(s.sp[i]/.55,1)*100+"%";
   $("fb").style.width=Math.min(s.sm[i]/.55,1)*100+"%";
   $("vsp").textContent=pct(s.sp[i]); $("vsm").textContent=pct(s.sm[i]);
@@ -169,7 +174,7 @@ function hud(i){
     `<span>ISMI <b>${v==null?"—":(v>0?"+":"")+num(v)}</b>${MM?" <i style='font-style:normal;font-size:10px'>(mm6)</i>":""}</span>`+
     `<span class="a">S⁺ <b class="a">${pct(s.sp[i])}</b></span>`+
     `<span class="b2">S⁻ <b class="b2">${pct(s.sm[i])}</b></span>`+
-    `<span>IPCA <b>${D.ipca[i].toFixed(2).replace(".",",")}%</b></span>`;
+    (BENCH==="nada"?"":`<span>${BENCH==="selic"?"Selic":"IPCA"} <b>${((BENCH==="selic"?D.selic:D.ipca)[i]??0).toFixed(2).replace(".",",")}%</b></span>`);
 }
 function marcar(i,cross){
   i=Math.max(R.a,Math.min(R.b,i));
@@ -180,7 +185,8 @@ function marcar(i,cross){
     a.setAttribute("cx",x);a.setAttribute("cy",escY(ism[i],dom1.lo,dom1.hi,H1));
     a.setAttribute("fill",ism[i]>=0?"var(--alta)":"var(--baixa)");a.style.opacity=1}
   else a.style.opacity=0;
-  if(sel.view==="indice"){b.setAttribute("cx",x);b.setAttribute("cy",escY(D.ipca[i],dom1.ilo,dom1.ihi,H1));b.style.opacity=1}
+  if(sel.view==="indice"&&BENCH!=="nada"){const bd=BENCH==="selic"?D.selic:D.ipca;
+    if(bd[i]!=null){b.setAttribute("cx",x);b.setAttribute("cy",escY(bd[i],dom1.ilo,dom1.ihi,H1));b.style.opacity=1}else b.style.opacity=0}
   else b.style.opacity=0;
   hud(i);hero(i);
 }
@@ -232,7 +238,13 @@ function renderKatex(){
   document.querySelectorAll(".ktx").forEach(el=>{
     katex.render(el.dataset.eq,el,{displayMode:false,throwOnError:false})});
 }
-segs($("cView"),VIEWS,"view");segs($("cFmt"),FMTS,"fmt");
+function segsBench(){
+  const el=$("cBench");el.innerHTML="";
+  BENCHES.forEach(([v,l])=>{const b=document.createElement("button");
+    b.textContent=l;b.setAttribute("aria-pressed",BENCH==v);
+    b.onclick=()=>{BENCH=v;segsBench();render()};el.appendChild(b)});
+}
+segs($("cView"),VIEWS,"view");segs($("cFmt"),FMTS,"fmt");segsBench();
 segs($("cRec"),RECORTES,"rec");segs($("cAr"),ARS,"ar");segs($("cK"),KS,"k");
 initSlider();renderKatex();
 let tmr;addEventListener("resize",()=>{clearTimeout(tmr);tmr=setTimeout(render,180)});
