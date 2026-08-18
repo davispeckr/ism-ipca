@@ -53,6 +53,8 @@ from dataclasses import dataclass
 
 import numpy as np
 import pandas as pd
+import datetime
+_FIM_ATUAL = datetime.date.today().year * 100 + datetime.date.today().month
 
 # ---------------------------------------------------------------- estruturas
 
@@ -71,7 +73,7 @@ ESTRUTURAS = [
     Estrutura("POF_1996", 199908, 200606,  655,  656,  661,  662),
     Estrutura("POF_2003", 200607, 201112, 2938, 2938, 2942, 2942),
     Estrutura("POF_2009", 201201, 201912, 1419, 1419, 1420, 1420),
-    Estrutura("POF_2018", 202001, 202606, 7060, 7060, 7061, 7061),
+    Estrutura("POF_2018", 202001, _FIM_ATUAL, 7060, 7060, 7061, 7061),
 ]
 
 V_VAR, V_PESO = 63, 66           # bruto
