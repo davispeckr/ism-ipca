@@ -1,34 +1,36 @@
+<div class="topo">
 <h1>Inflation Shock Momentum Index (ISMI)</h1>
-<p class="standfirst">Fração da cesta do IPCA, ponderada pelo peso de cada subitem, cuja inflação registra desvios consecutivos de mesmo sinal em relação a um padrão estimado por categoria. A construção segue <a href="https://www.frbsf.org/wp-content/uploads/wp2026-10.pdf" target="_blank" rel="noopener">Lansing e Shapiro (2026)</a>.</p>
-<p class="byline">614 subitens do SNIPC · julho de 2009 a junho de 2026 · atualização mensal automática · <a href="#notas">metodologia</a></p>
+<div class="langbar"><button id="ptBtn" class="lang active" data-lang="pt">Português</button><button id="enBtn" class="lang" data-lang="en">English</button></div>
+</div>
+<p class="standfirst" data-i18n="standfirst"></p>
+<p class="byline"><a class="who" href="https://www.linkedin.com/in/davi-speck-ramos-a26079242" target="_blank" rel="noopener">Davi Speck Ramos</a><a class="who partnr" href="https://partnr.ai" target="_blank" rel="noopener">Partnr</a></p>
 
-<div class="comoler"><b>Como ler.</b> O índice deve ser interpretado como uma medida de difusão: ele informa qual fração da cesta acumula surpresas de inflação na mesma direção, sem medir o tamanho dessas surpresas. Trata-se de uma leitura do momento corrente, e não de uma previsão.</div>
+<div class="comoler" data-i18n="comoler"></div>
 
 <div class="controles">
-  <div class="grupo"><a href="#par-serie">Série exibida</a><div class="seg" id="cView"></div></div>
-  <div class="grupo"><a href="#par-formato">Formato</a><div class="seg" id="cFmt"></div></div>
-  <div class="grupo"><a href="#par-recorte">Recorte</a><div class="seg" id="cRec"></div></div>
-  <div class="grupo"><a href="#par-bench">Comparar com</a><div class="seg" id="cBench"></div></div>
-  <div class="grupo"><a href="#par-ar">Modelo AR</a><div class="seg" id="cAr"></div></div>
-  <div class="grupo"><a href="#par-k">k</a><div class="seg" id="cK"></div></div>
-  <div class="grupo"><label class="toggle" style="padding-top:0"><input type="checkbox" id="tMM"> <a href="#par-mm">média móvel 6m</a></label></div>
+  <div class="grupo"><a href="#par-serie" data-i18n="lbl-serie"></a><div class="seg" id="cView"></div></div>
+  <div class="grupo"><a href="#par-formato" data-i18n="lbl-formato"></a><div class="seg" id="cFmt"></div></div>
+  <div class="grupo"><a href="#par-bench" data-i18n="lbl-bench"></a><div class="seg" id="cBench"></div></div>
+  <div class="grupo"><a href="#par-ar" data-i18n="lbl-ar"></a><div class="seg" id="cAr"></div></div>
+  <div class="grupo"><a href="#par-k" data-i18n="lbl-k">k</a><div class="seg" id="cK"></div></div>
+  <div class="grupo"><label class="toggle" style="padding-top:0"><input type="checkbox" id="tMM"> <a href="#par-mm" data-i18n="lbl-mm"></a></label></div>
 </div>
 
 <section class="corrente">
-  <div class="barra-topo"><span>Pressão de baixa</span><span id="ref">—</span><span>Pressão de alta</span></div>
+  <div class="barra-topo"><span data-i18n="press-baixa"></span><span id="ref">—</span><span data-i18n="press-alta"></span></div>
   <div class="barra">
     <div class="lado esq"><div class="trilho"></div><div class="fill b" id="fb"></div></div>
     <div class="lado dir"><div class="trilho"></div><div class="fill a" id="fa"></div></div>
   </div>
   <div class="leitura">
-    <div class="l"><b id="vsm">—</b><span>S⁻ · da cesta</span></div>
-    <div class="c"><b id="vism">—</b><span>ISMI · S⁺ menos S⁻</span></div>
-    <div class="r"><b id="vsp">—</b><span>S⁺ · da cesta</span></div>
+    <div class="l"><b id="vsm">—</b><span data-i18n="sm-lab"></span></div>
+    <div class="c"><b id="vism">—</b><span data-i18n="ismi-lab"></span></div>
+    <div class="r"><b id="vsp">—</b><span data-i18n="sp-lab"></span></div>
   </div>
 </section>
 
 <figure>
-  <p class="figtit" id="figtit">Índice e IPCA em 12 meses</p>
+  <p class="figtit" id="figtit"></p>
   <div class="hud" id="hud1"></div>
   <svg id="g1" role="img" aria-label="Série do índice"></svg>
   <div class="anos">
@@ -44,48 +46,47 @@
 
 <section class="rodape" id="notas">
   <div>
-    <h2>Sobre o índice</h2>
-    <p>Distinguir em tempo real choques transitórios de choques persistentes é um problema central da política monetária. O reconhecimento tardio de uma pressão persistente arrisca desancorar expectativas, enquanto a reação a um choque passageiro impõe custos desnecessários em produto e emprego.</p>
-    <p>A premissa de Lansing e Shapiro (2026) é que, se o processo gerador da inflação de uma categoria permanece válido, os desvios em relação a ele não devem formar sequências sistemáticas de um mesmo sinal. Quando muitas categorias acumulam desvios na mesma direção ao mesmo tempo, há indício de mudança no ambiente inflacionário, visível nos dados desagregados antes de ficar clara no agregado.</p>
-    <p>O índice responde a uma pergunta que os núcleos não respondem: se um movimento do IPCA é generalizado ou concentrado em poucos itens. Complementa, sem substituir, as medidas de núcleo e os índices de difusão tradicionais.</p>
-    <h3>Interpretação e limitações</h3>
-    <p>O índice mede transição, não patamar. Uma inflação permanentemente mais alta devolve o índice a zero depois que a janela de estimação incorpora o novo regime.</p>
-    <p>No histórico brasileiro, o poder de antecipação é irregular: o índice antecedeu o pico inflacionário de 2015 em cerca de cinco meses, mas registrou o de 2022 com atraso. A leitura mais desinflacionária da série, em junho de 2020, ocorreu um ano antes de o IPCA alcançar dois dígitos. A persistência de sinal nos subitens brasileiros é também menor que a documentada para os Estados Unidos, o que recomenda a leitura contemporânea em vez de preditiva.</p>
-    <p>Por fim, a assimetria à direita da variação mensal dos subitens desloca o nível do índice em cerca de &minus;0,07. A referência de leitura é a média histórica, não o zero.</p>
+    <h2 data-i18n="h-sobre"></h2>
+    <p data-i18n="sobre-1"></p>
+    <p data-i18n="sobre-2"></p>
+    <p data-i18n="sobre-3"></p>
+    <h3 data-i18n="h-interp"></h3>
+    <p data-i18n="interp-1"></p>
+    <p data-i18n="interp-2"></p>
+    <p data-i18n="interp-3"></p>
   </div>
   <div>
-    <h2>Metodologia</h2>
-    <p>Para cada subitem <i>i</i>, estima-se por mínimos quadrados, em janela móvel de 120 meses, uma regressão autorregressiva com controles de sazonalidade:</p>
+    <h2 data-i18n="h-metod"></h2>
+    <p data-i18n="metod-1"></p>
     <div class="eqrow" data-eq="\pi_{i,t} = \mu_i + \sum_{p=1}^{P}\rho_{i,p}\,\pi_{i,t-p} + \sum_{m=2}^{12}\gamma_{i,m}\,D_{m,t} + \varepsilon_{i,t}"></div>
-    <p>em que <span class="ktx" data-eq="\pi_{i,t}"></span> é a variação mensal do subitem, <span class="ktx" data-eq="D_{m,t}"></span> são variáveis binárias de mês-calendário e <i>P</i> é a ordem do modelo. A surpresa de inflação é o resíduo do último mês de cada janela:</p>
+    <p data-i18n="metod-2"></p>
     <div class="eqrow" data-eq="\hat{\varepsilon}_{i,t} = \pi_{i,t} - \hat{\pi}_{i,t\,|\,t-1}"></div>
-    <p>Um subitem exibe momentum quando as últimas <i>k</i> surpresas têm o mesmo sinal:</p>
+    <p data-i18n="metod-3"></p>
     <div class="eqrow" data-eq="M^{+}_{i,t} = \prod_{j=0}^{k-1}\mathbf{1}\!\left(\hat{\varepsilon}_{i,t-j} > 0\right), \qquad M^{-}_{i,t} = \prod_{j=0}^{k-1}\mathbf{1}\!\left(\hat{\varepsilon}_{i,t-j} < 0\right)"></div>
-    <p>As frações da cesta sob momentum positivo e negativo agregam os sinais pelos pesos <span class="ktx" data-eq="\omega_{i,t}"></span> de cada subitem no IPCA, e o índice é a diferença entre elas:</p>
+    <p data-i18n="metod-4"></p>
     <div class="eqrow" data-eq="S^{+}_{t} = \sum_{i}\omega_{i,t}\,M^{+}_{i,t}, \qquad S^{-}_{t} = \sum_{i}\omega_{i,t}\,M^{-}_{i,t}"></div>
     <div class="eqrow" data-eq="\mathrm{ISMI}_{t} = S^{+}_{t} - S^{-}_{t}"></div>
-    <p>Quando ativada, a média móvel suaviza o índice sobre os seis meses mais recentes:</p>
+    <p data-i18n="metod-5"></p>
     <div class="eqrow" data-eq="\mathrm{ISMI}^{\,\mathrm{MM6}}_{t} = \tfrac{1}{6}\sum_{j=0}^{5}\mathrm{ISMI}_{t-j}"></div>
 
-    <h3>Parâmetros do painel</h3>
-    <p id="par-serie"><b>Série exibida.</b> Alterna entre o índice líquido, o índice acompanhado dos componentes e os componentes isolados. S⁺ e S⁻ não somam um, pois a maior parte da cesta não apresenta sequência em um mês típico.</p>
-    <p id="par-formato"><b>Formato.</b> Linha ou barras mensais. As barras evidenciam o sinal de cada mês; a linha evidencia a trajetória.</p>
-    <p id="par-recorte"><b>Recorte.</b> Subconjunto da cesta usado na agregação, com pesos reescalonados para somar um dentro do recorte. Serviços e bens seguem os grupos do IPCA e devem ser lidos como aproximações.</p>
-    <p id="par-bench"><b>Comparar com.</b> Linha de referência sobreposta ao índice, no eixo direito: o IPCA ou a Selic acumulados em doze meses, ou nenhuma. Serve para situar o índice frente à inflação corrente e à política monetária; não entra no cálculo.</p>
-    <p id="par-ar"><b>Modelo AR.</b> Ordem <i>P</i> da regressão de referência. Ordens maiores absorvem mais dinâmica de curto prazo e tendem a reduzir o número de sequências identificadas. Os resultados são pouco sensíveis a essa escolha.</p>
-    <p id="par-k"><b>k.</b> Número de surpresas consecutivas de mesmo sinal exigido para classificar um subitem. Valores menores ampliam a fração classificada e admitem mais ruído; valores maiores tornam o sinal mais estrito.</p>
-    <p id="par-mm"><b>Média móvel 6m.</b> Suavização recomendada para leitura. O índice mensal é volátil e pode trocar de sinal por um ou dois meses sem significado econômico.</p>
+    <h3 data-i18n="h-params"></h3>
+    <p id="par-serie" data-i18n="par-serie"></p>
+    <p id="par-formato" data-i18n="par-formato"></p>
+    <p id="par-bench" data-i18n="par-bench"></p>
+    <p id="par-ar" data-i18n="par-ar"></p>
+    <p id="par-k" data-i18n="par-k"></p>
+    <p id="par-mm" data-i18n="par-mm"></p>
 
-    <h3>Dados e encadeamento</h3>
-    <p>Subitens do IPCA em quatro estruturas de POF, unidas pelo código de sete dígitos do SNIPC. Subitens ausentes em uma estrutura recebem a variação do item que os contém, com peso zero, procedimento adotado pelo Banco Central (2018). A reconstrução do índice cheio a partir dos subitens reproduz a série oficial com erro médio de 0,007 p.p.</p>
-    <h3>Sazonalidade</h3>
-    <p>O artigo original usa dados de PCE dessazonalizados pelo BEA. A série dessazonalizada do IBGE gera fatores apenas para o grupo Alimentação e bebidas, cerca de 12% da cesta, e substituí-la pelo dado bruto não altera o índice. As variáveis binárias mensais reduzem a amplitude sazonal residual do índice de 0,13 para 0,04.</p>
-    <h3>Referências</h3>
+    <h3 data-i18n="h-dados"></h3>
+    <p data-i18n="dados-1"></p>
+    <h3 data-i18n="h-saz"></h3>
+    <p data-i18n="saz-1"></p>
+    <h3 data-i18n="h-refs"></h3>
     <p class="ref">Lansing, K. J. e A. H. Shapiro (2026). <i>Measuring Inflation Shock Momentum.</i> FRBSF Working Paper 2026-10.</p>
     <p class="ref">Banco Central do Brasil (2018). <i>Evolução da sazonalidade do IPCA.</i> Estudo Especial 24/2018.</p>
     <p class="ref">IBGE (2021). <i>Metodologia de geração do IPCA dessazonalizado.</i> Nota metodológica 01/2021.</p>
-    <div class="baixar"><button id="dl">Baixar série completa (CSV)</button></div>
+    <div class="baixar"><button id="dl" data-i18n="btn-csv"></button></div>
   </div>
 </section>
-<p class="fonte">Fonte dos dados: IBGE, SIDRA, tabelas 655, 656, 2938, 1419 e 7060.</p>
+<p class="fonte" data-i18n="fonte"></p>
 </div>
