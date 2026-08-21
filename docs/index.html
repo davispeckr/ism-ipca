@@ -193,18 +193,15 @@ svg{display:block;width:100%;height:auto;overflow:visible}
     <h2 data-i18n="h-sobre"></h2>
     <p data-i18n="sobre-1"></p>
     <p data-i18n="sobre-2"></p>
-    <p data-i18n="sobre-3"></p>
     <h3 data-i18n="h-interp"></h3>
     <p data-i18n="interp-1"></p>
-    <p data-i18n="interp-2"></p>
-    <p data-i18n="interp-3"></p>
   </div>
   <div>
     <h2 data-i18n="h-metod"></h2>
     <p data-i18n="metod-1"></p>
     <div class="eqrow" data-eq="\pi_{i,t} = \mu_i + \sum_{p=1}^{P}\rho_{i,p}\,\pi_{i,t-p} + \sum_{m=2}^{12}\gamma_{i,m}\,D_{m,t} + \varepsilon_{i,t}"></div>
     <p data-i18n="metod-2"></p>
-    <div class="eqrow" data-eq="\hat{\varepsilon}_{i,t} = \pi_{i,t} - \hat{\pi}_{i,t\,|\,t-1}"></div>
+    <div class="eqrow" data-eq="\hat{\varepsilon}_{i,t} = \pi_{i,t} - \hat{\pi}_{i,t}"></div>
     <p data-i18n="metod-3"></p>
     <div class="eqrow" data-eq="M^{+}_{i,t} = \prod_{j=0}^{k-1}\mathbf{1}\!\left(\hat{\varepsilon}_{i,t-j} > 0\right), \qquad M^{-}_{i,t} = \prod_{j=0}^{k-1}\mathbf{1}\!\left(\hat{\varepsilon}_{i,t-j} < 0\right)"></div>
     <p data-i18n="metod-4"></p>
@@ -213,7 +210,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
     <p data-i18n="metod-5"></p>
     <div class="eqrow" data-eq="\mathrm{ISMI}^{\,\mathrm{MM6}}_{t} = \tfrac{1}{6}\sum_{j=0}^{5}\mathrm{ISMI}_{t-j}"></div>
 
-    <h3 data-i18n="h-params"></h3>
+    <h2 data-i18n="h-params"></h2>
     <p id="par-serie" data-i18n="par-serie"></p>
     <p id="par-formato" data-i18n="par-formato"></p>
     <p id="par-bench" data-i18n="par-bench"></p>
@@ -239,35 +236,32 @@ let LANG="pt";
 const I18N={
  pt:{
   standfirst:'A construção deste dashboard segue a metodologia proposta por <a href="https://www.frbsf.org/wp-content/uploads/wp2026-10.pdf" target="_blank" rel="noopener">Lansing e Shapiro (2026)</a>, adaptada ao Brasil.',
-  comoler:'<b>Como ler.</b> O índice mede a difusão dos choques de inflação: a fração da cesta, ponderada pelo peso de cada subitem, cujos desvios em relação ao padrão estimado se acumulam na mesma direção. Valores acima de zero indicam predomínio de pressão altista; abaixo, baixista.',
+  comoler:'<b>Como ler.</b> O índice mede a difusão dos choques de inflação: a fração da cesta, ponderada pelo peso de cada subitem, cujos desvios em relação ao padrão estimado se acumulam na mesma direção. Um índice em elevação indica que a pressão inflacionária vem se espalhando pela cesta; um índice em queda indica que a inflação vem perdendo tração.',
   "lbl-serie":"Série exibida","lbl-formato":"Formato","lbl-bench":"Comparar com","lbl-ar":"Modelo AR","lbl-k":"k","lbl-mm":"média móvel 6m",
-  "press-baixa":"Pressão de baixa","press-alta":"Pressão de alta",
+  "press-baixa":"Momentum negativo","press-alta":"Momentum positivo",
   "sm-lab":"S⁻ · da cesta","ismi-lab":"ISMI · S⁺ menos S⁻","sp-lab":"S⁺ · da cesta",
   "h-sobre":"Sobre o índice",
-  "sobre-1":"Distinguir em tempo real choques transitórios de choques persistentes é um problema central da política monetária. O reconhecimento tardio de uma pressão persistente arrisca desancorar expectativas, enquanto a reação a um choque passageiro impõe custos desnecessários em produto e emprego.",
-  "sobre-2":"A premissa de Lansing e Shapiro (2026) é que, se o processo gerador da inflação de uma categoria permanece válido, os desvios em relação a ele não devem formar sequências sistemáticas de um mesmo sinal. Quando muitas categorias acumulam desvios na mesma direção ao mesmo tempo, há indício de mudança no ambiente inflacionário, visível nos dados desagregados antes de ficar clara no agregado.",
-  "sobre-3":"O índice responde a uma pergunta que os núcleos não respondem: se um movimento do IPCA é generalizado ou concentrado em poucos itens. Complementa, sem substituir, as medidas de núcleo e os índices de difusão tradicionais.",
+  "sobre-1":"Distinguir em tempo real choques transitórios de choques persistentes é um problema central da política monetária. O reconhecimento tardio de uma pressão persistente arrisca desancorar expectativas, enquanto a reação a um choque passageiro impõe custos desnecessários em produto e emprego. Disso surge a necessidade de analisar com profundidade a persistência e a difusão da inflação na economia.",
+  "sobre-2":"Proposto por Lansing e Shapiro (2026), o Inflation Shock Momentum Index representa a diferença entre a fração da cesta em momentum positivo e a fração em momentum negativo de inflação. A ideia parte de um modelo que descreve o comportamento habitual da inflação de cada categoria. Em condições normais, o que esse modelo não prevê são apenas ruídos, que ora ficam acima, ora abaixo do esperado, sem direção definida. Quando esses desvios passam a se repetir sistematicamente para o mesmo lado, e isso ocorre em muitas categorias ao mesmo tempo, é sinal de que o ambiente inflacionário está mudando.",
   "h-interp":"Interpretação e limitações",
-  "interp-1":"O índice capta mudanças no regime inflacionário, e não o nível da inflação. Um aumento permanente do patamar de inflação eleva o índice apenas durante a transição; uma vez que a janela de estimação incorpora o novo regime, o índice retorna a zero.",
-  "interp-2":"No histórico brasileiro, o poder de antecipação é irregular: o índice antecedeu o pico inflacionário de 2015 em cerca de cinco meses, mas registrou o de 2022 com atraso. A leitura mais desinflacionária da série, em junho de 2020, ocorreu um ano antes de o IPCA alcançar dois dígitos. A persistência de sinal nos subitens brasileiros é também menor que a documentada para os Estados Unidos, o que recomenda a leitura contemporânea em vez de preditiva.",
-  "interp-3":"Por fim, a assimetria à direita da variação mensal dos subitens desloca o nível do índice em cerca de \u22120,07. A referência de leitura é a média histórica, não o zero.",
+  "interp-1":"O índice deve ser lido pelo seu movimento, e não pelo seu nível absoluto. Um índice em elevação indica que os choques de inflação estão se tornando mais persistentes e difundidos pela cesta; um índice em queda indica o contrário. Por isso, ele capta mudanças no regime inflacionário, e não o nível da inflação em si: um aumento permanente do patamar de preços eleva o índice apenas durante a transição, e assim que a janela de estimação incorpora o novo regime como o novo normal, o índice retorna ao seu ponto de partida.",
   "h-metod":"Metodologia",
   "metod-1":"Para cada subitem <i>i</i>, estima-se por mínimos quadrados, em janela móvel de 120 meses, uma regressão autorregressiva com controles de sazonalidade:",
-  "metod-2":'em que <span class="ktx" data-eq="\\pi_{i,t}"></span> é a variação mensal do subitem, <span class="ktx" data-eq="D_{m,t}"></span> são variáveis binárias de mês-calendário e <i>P</i> é a ordem do modelo. A surpresa de inflação é o resíduo do último mês de cada janela:',
+  "metod-2":'em que <span class="ktx" data-eq="\\pi_{i,t}"></span> é a variação mensal do subitem, <span class="ktx" data-eq="D_{m,t}"></span> são variáveis binárias de mês-calendário e <i>P</i> é a ordem do modelo. A surpresa de inflação é o resíduo do mês <span class="ktx" data-eq="t"></span> na regressão ajustada sobre a janela que o contém:',
   "metod-3":"Um subitem exibe momentum quando as últimas <i>k</i> surpresas têm o mesmo sinal:",
   "metod-4":'As frações da cesta sob momentum positivo e negativo agregam os sinais pelos pesos <span class="ktx" data-eq="\\omega_{i,t}"></span> de cada subitem no IPCA, e o índice é a diferença entre elas:',
   "metod-5":"Quando ativada, a média móvel suaviza o índice sobre os seis meses mais recentes:",
   "h-params":"Parâmetros do painel",
-  "par-serie":"<b>Série exibida.</b> Alterna entre o índice líquido, o índice acompanhado dos componentes e os componentes isolados. S⁺ e S⁻ não somam um, pois a maior parte da cesta não apresenta sequência em um mês típico.",
-  "par-formato":"<b>Formato.</b> Linha ou barras mensais. As barras evidenciam o sinal de cada mês; a linha evidencia a trajetória.",
-  "par-bench":"<b>Comparar com.</b> Linha de referência sobreposta ao índice, no eixo direito: o IPCA ou a Selic acumulados em doze meses, ou nenhuma. Serve para situar o índice frente à inflação corrente e à política monetária; não entra no cálculo.",
-  "par-ar":"<b>Modelo AR.</b> Ordem <i>P</i> da regressão de referência. Ordens maiores absorvem mais dinâmica de curto prazo e tendem a reduzir o número de sequências identificadas. Os resultados são pouco sensíveis a essa escolha.",
+  "par-serie":"<b>Série exibida.</b> Alterna entre o índice líquido, o índice acompanhado dos componentes e os componentes isolados.",
+  "par-formato":"<b>Formato.</b> Linha ou barras mensais.",
+  "par-bench":"<b>Comparar com.</b> Linha de referência sobreposta ao índice, no eixo direito: o IPCA ou a Selic acumulados em doze meses, ou nenhuma. Serve para situar o índice frente à inflação corrente e à política monetária.",
+  "par-ar":"<b>Modelo AR.</b> Ordem <i>P</i> da regressão de referência. Ordens maiores absorvem mais dinâmica de curto prazo e tendem a reduzir o número de sequências identificadas.",
   "par-k":"<b>k.</b> Número de surpresas consecutivas de mesmo sinal exigido para classificar um subitem. Valores menores ampliam a fração classificada e admitem mais ruído; valores maiores tornam o sinal mais estrito.",
   "par-mm":"<b>Média móvel 6m.</b> Suavização recomendada para leitura. O índice mensal é volátil e pode trocar de sinal por um ou dois meses sem significado econômico.",
   "h-dados":"Dados e encadeamento",
   "dados-1":"Subitens do IPCA em quatro estruturas de POF, unidas pelo código de sete dígitos do SNIPC. Subitens ausentes em uma estrutura recebem a variação do item que os contém, com peso zero, procedimento adotado pelo Banco Central (2018). A reconstrução do índice cheio a partir dos subitens reproduz a série oficial com erro médio de 0,007 p.p.",
   "h-saz":"Sazonalidade",
-  "saz-1":"O artigo original usa dados de PCE dessazonalizados pelo BEA. A série dessazonalizada do IBGE gera fatores apenas para o grupo Alimentação e bebidas, cerca de 12% da cesta, e substituí-la pelo dado bruto não altera o índice. As variáveis binárias mensais reduzem a amplitude sazonal residual do índice de 0,13 para 0,04.",
+  "saz-1":"O artigo original usa dados de PCE dessazonalizados pelo BEA. A série dessazonalizada do IBGE cobre apenas parte da cesta, cerca de 12% em peso, restrita a subitens de alimentação, e substituí-la pelo dado bruto não altera o índice. As variáveis binárias mensais reduzem a amplitude sazonal residual do índice de 0,13 para 0,04.",
   "h-refs":"Referências",
   "btn-csv":"Baixar série completa (CSV)",
   "fonte":"Fonte dos dados: IBGE, SIDRA, tabelas 655, 656, 2938, 1419 e 7060.",
@@ -281,35 +275,32 @@ const I18N={
  },
  en:{
   standfirst:'This dashboard follows the methodology proposed by <a href="https://www.frbsf.org/wp-content/uploads/wp2026-10.pdf" target="_blank" rel="noopener">Lansing and Shapiro (2026)</a>, adapted to Brazil.',
-  comoler:'<b>How to read it.</b> The index measures the diffusion of inflation shocks: the share of the basket, weighted by each subitem, whose deviations from the estimated pattern accumulate in the same direction. Values above zero indicate prevailing upward pressure; below, downward.',
+  comoler:'<b>How to read it.</b> The index measures the diffusion of inflation shocks: the share of the basket, weighted by each subitem, whose deviations from the estimated pattern accumulate in the same direction. A rising index indicates that inflationary pressure is spreading across the basket; a falling index indicates that inflation is losing traction.',
   "lbl-serie":"Series shown","lbl-formato":"Format","lbl-bench":"Compare with","lbl-ar":"AR model","lbl-k":"k","lbl-mm":"6m moving average",
-  "press-baixa":"Downward pressure","press-alta":"Upward pressure",
+  "press-baixa":"Negative momentum","press-alta":"Positive momentum",
   "sm-lab":"S⁻ · of basket","ismi-lab":"ISMI · S⁺ minus S⁻","sp-lab":"S⁺ · of basket",
   "h-sobre":"About the index",
-  "sobre-1":"Telling transitory shocks from persistent ones in real time is a central problem in monetary policy. Recognizing persistent pressure too late risks unanchoring expectations, while reacting to a passing shock imposes needless costs on output and employment.",
-  "sobre-2":"Lansing and Shapiro (2026) posit that, if a category's inflation-generating process remains unchanged, deviations from it should not form systematic runs of the same sign. When many categories accumulate deviations in the same direction at once, it signals a shift in the inflation environment, visible in disaggregated data before it becomes clear in the aggregate.",
-  "sobre-3":"The index answers a question that core measures do not: whether a movement in the IPCA, Brazil's headline consumer price index, is broad-based or concentrated in a few items. It complements, without replacing, core measures and traditional diffusion indices.",
+  "sobre-1":"Telling transitory shocks from persistent ones in real time is a central problem in monetary policy. Recognizing persistent pressure too late risks unanchoring expectations, while reacting to a passing shock imposes needless costs on output and employment. This creates the need to examine, in depth, the persistence and diffusion of inflation across the economy.",
+  "sobre-2":"Proposed by Lansing and Shapiro (2026), the Inflation Shock Momentum Index is the difference between the share of the basket in positive inflation momentum and the share in negative momentum. The idea starts from a model that describes the usual behavior of each category's inflation. Under normal conditions, what the model fails to predict is just noise, landing above or below expectation with no set direction. When these deviations begin to fall systematically on the same side, and do so across many categories at once, it signals that the inflation environment is shifting.",
   "h-interp":"Interpretation and limitations",
-  "interp-1":"The index captures shifts in the inflation regime rather than the level of inflation. A permanent rise in the inflation level raises the index only during the transition; once the estimation window absorbs the new regime, the index returns to zero.",
-  "interp-2":"In the Brazilian record, its leading power is irregular: the index anticipated the 2015 inflation peak by about five months but registered the 2022 peak with a lag. Its most disinflationary reading, in June 2020, came a year before the IPCA reached double digits. Signal persistence in Brazilian subitems is also lower than documented for the United States, which favors a contemporaneous rather than predictive reading.",
-  "interp-3":"Finally, the right skew of monthly subitem variation shifts the level of the index by roughly \u22120.07. The relevant benchmark for reading the index is its historical mean, not zero.",
+  "interp-1":"The index should be read by its movement, not by its absolute level. A rising index means inflation shocks are becoming more persistent and more widespread across the basket; a falling index means the opposite. It therefore captures shifts in the inflation regime rather than the level of inflation itself: a permanent rise in the price level raises the index only during the transition, and once the estimation window absorbs the new regime as the new normal, the index returns to its starting point.",
   "h-metod":"Methodology",
   "metod-1":"For each subitem (elementary price category) <i>i</i>, an autoregressive regression with seasonality controls is estimated by ordinary least squares over a 120-month rolling window:",
-  "metod-2":'where <span class="ktx" data-eq="\\pi_{i,t}"></span> is the monthly variation of the subitem, <span class="ktx" data-eq="D_{m,t}"></span> are calendar-month dummies and <i>P</i> is the model order. The inflation surprise is the residual of the last month of each window:',
+  "metod-2":'where <span class="ktx" data-eq="\\pi_{i,t}"></span> is the monthly variation of the subitem, <span class="ktx" data-eq="D_{m,t}"></span> are calendar-month dummies and <i>P</i> is the model order. The inflation surprise is the residual of month <span class="ktx" data-eq="t"></span> in the regression fitted over the window containing it:',
   "metod-3":"A subitem exhibits momentum when its last <i>k</i> surprises share the same sign:",
   "metod-4":'The shares of the basket under positive and negative momentum aggregate the signals by the weights <span class="ktx" data-eq="\\omega_{i,t}"></span> of each subitem in the IPCA, and the index is the difference between them:',
   "metod-5":"When enabled, the moving average smooths the index over the six most recent months:",
   "h-params":"Panel controls",
-  "par-serie":"<b>Series shown.</b> Switches between the net index, the index with its components, and the components alone. S⁺ and S⁻ do not sum to one, since most of the basket shows no run in a typical month.",
-  "par-formato":"<b>Format.</b> Monthly line or bars. Bars highlight the sign of each month; the line highlights the trajectory.",
-  "par-bench":"<b>Compare with.</b> A reference line overlaid on the index, on the right axis: the IPCA or the Selic rate accumulated over twelve months, or none. It situates the index against current inflation and monetary policy; it does not enter the calculation.",
-  "par-ar":"<b>AR model.</b> Order <i>P</i> of the reference regression. Higher orders absorb more short-run dynamics and tend to reduce the number of runs identified. Results are little sensitive to this choice.",
+  "par-serie":"<b>Series shown.</b> Switches between the net index, the index with its components, and the components alone.",
+  "par-formato":"<b>Format.</b> Monthly line or bars.",
+  "par-bench":"<b>Compare with.</b> A reference line overlaid on the index, on the right axis: the IPCA or the Selic rate accumulated over twelve months, or none. It situates the index against current inflation and monetary policy.",
+  "par-ar":"<b>AR model.</b> Order <i>P</i> of the reference regression. Higher orders absorb more short-run dynamics and tend to reduce the number of runs identified.",
   "par-k":"<b>k.</b> Number of consecutive same-signed surprises required to classify a subitem. Lower values widen the classified share and admit more noise; higher values make the signal stricter.",
   "par-mm":"<b>6m moving average.</b> Smoothing recommended for reading. The monthly index is volatile and may flip sign for a month or two without economic meaning.",
   "h-dados":"Data and chaining",
   "dados-1":"IPCA subitems across four POF weighting structures, joined by the seven-digit SNIPC code. Subitems absent from a structure inherit the variation of the item that contains them, with zero weight, following the Central Bank of Brazil (2018). Reconstructing the full index from the subitems reproduces the official series with a mean error of 0.007 pp.",
   "h-saz":"Seasonality",
-  "saz-1":"The original paper uses PCE data seasonally adjusted by the BEA. The IBGE's adjusted series generates factors only for the Food and beverages group, about 12% of the basket, and replacing the raw data with it does not change the index. The monthly dummies reduce the residual seasonal amplitude of the index from 0.13 to 0.04.",
+  "saz-1":"The original paper uses PCE data seasonally adjusted by the BEA. The IBGE's adjusted series covers only part of the basket, about 12% by weight, restricted to food subitems, and replacing the raw data with it does not change the index. The monthly dummies reduce the residual seasonal amplitude of the index from 0.13 to 0.04.",
   "h-refs":"References",
   "btn-csv":"Download full series (CSV)",
   "fonte":"Data source: IBGE, SIDRA, tables 655, 656, 2938, 1419 and 7060.",
@@ -428,11 +419,6 @@ function desenhar(){
        `<text class="eixo" x="${P.l-8}" y="${y+4}" text-anchor="end">${lbl}</text>`});
   if(comIpca)ticks(ilo,ihi,5).forEach(t=>{const y=escY(t,ilo,ihi,h);
     g+=`<text class="eixo" x="${w-P.r+10}" y="${y+4}">${t}%</text>`});
-  // media historica (visoes com indice)
-  const mh=mediaHist();
-  if(v!=="soComp"&&mh>lo&&mh<hi){const ym=escY(mh,lo,hi,h);
-    g+=`<line x1="${P.l}" y1="${ym}" x2="${w-P.r}" y2="${ym}" stroke="#9CA1A7" stroke-width="1" stroke-dasharray="5 4"/>`+
-       `<text class="eixo b" x="${P.l-8}" y="${ym+4}" text-anchor="end" fill="#6E7278">média</text>`}
   const corSigno=x=>x>=0?"var(--alta)":"var(--baixa)";
   const corBarra=x=>x>=0?"var(--alta)":"#B6C4D6";
   if(v==="indice"){
@@ -552,10 +538,11 @@ function initSlider(){
 }
 $("tMM").addEventListener("change",e=>{MM=e.target.checked;render()});
 $("dl").onclick=()=>{
-  let csv="data,recorte,ar,k,S_alta,S_baixa,ISMI,IPCA_12m\n";
+  let csv="data,ar,k,S_positivo,S_negativo,ISMI,IPCA_12m,Selic_12m\n";
   Object.keys(D.series).forEach(key=>{const[r,a,k]=key.split("|"),s=D.series[key];
+    if(r!=="cheio")return;
     D.datas.forEach((d,i)=>{if(s.ism[i]==null)return;
-      csv+=`${d},${r},${a},${k},${s.sp[i]},${s.sm[i]},${s.ism[i]},${D.ipca[i]??""}\n`})});
+      csv+=`${d},${a},${k},${s.sp[i]},${s.sm[i]},${s.ism[i]},${D.ipca[i]??""},${D.selic[i]??""}\n`})});
   const u=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));
   const a=document.createElement("a");a.href=u;a.download="ismi_ipca.csv";a.click();URL.revokeObjectURL(u);
 };
