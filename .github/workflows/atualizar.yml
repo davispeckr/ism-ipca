@@ -1,40 +1,51 @@
-name: Atualizar índice ISM-IPCA
+name: Atualizar ISMI Brasil
 
 on:
   schedule:
-    # dia 15 de cada mês, 13h UTC (10h em Brasília).
-    # O IPCA sai por volta do dia 10; o dia 15 dá folga.
-    - cron: "0 13 15 * *"
-  workflow_dispatch:        # permite rodar manualmente pelo site do GitHub
+    # Dia 15 de cada mês, 12:00 UTC (09:00 em Brasília)
+    - cron: "0 12 15 * *"
+  # Permite rodar manualmente: Actions > Atualizar ISMI Brasil > Run workflow
+  workflow_dispatch:
 
 permissions:
   contents: write
 
+concurrency:
+  group: ismi-update
+  cancel-in-progress: false
+
 jobs:
-  build:
+  update:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    steps:
-      - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Python
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: "3.11"
           cache: pip
 
-      - run: pip install -r requirements.txt
+      - name: Dependências
+        run: pip install -r requirements.txt
 
-      - name: Rodar o pipeline
-        run: python build.py
+      # AJUSTE: troque pelo comando que roda seu pipeline
+      # (coleta SIDRA via sidrapy, modelos AR, momentum, geração do site)
+      - name: Rodar pipeline
+        run: python pipeline.py
 
-      - name: Commitar se houve mudança
+      # AJUSTE: troque data/ e docs/ pelas pastas que o pipeline altera
+      - name: Commit dos dados atualizados
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/
-          if git diff --staged --quiet; then
-            echo "Nada mudou, IBGE provavelmente ainda não publicou."
-            exit 0
+          git config user.name "Davi Speck"
+          git config user.email "davispeckr@users.noreply.github.com"
+          git add data/ docs/
+          if git diff --cached --quiet; then
+            echo "Sem dados novos (IPCA do mês ainda não publicado no SIDRA?)."
+          else
+            git commit -m "Atualização mensal ISMI Brasil $(date -u +%Y-%m)"
+            git push
           fi
-          git commit -m "Atualiza série ISM-IPCA ($(date +%Y-%m))"
-          git push
