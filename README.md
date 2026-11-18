@@ -4,7 +4,7 @@ Aplicação ao IPCA do filtro não paramétrico de Lansing e Shapiro (FRBSF WP 2
 no nível de subitem do SNIPC. Painel de agosto de 1999 em diante; o índice começa em
 julho de 2009 por conta da janela de estimação de 120 meses.
 
-**Dashboard:** https://SEU-USUARIO.github.io/ism-ipca/
+**Dashboard:** https://davispeckr.github.io/ism-ipca/
 
 ## Uso
 
